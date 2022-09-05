@@ -40,8 +40,8 @@
               </li>
               <li class="nav-item">
                 <!-- **********This function is generating error in saving the object in localstorage because 
-            add event listener will applicable on null if not a admin -->
-                <input type="hidden" class="username" placeholder="this is jugaad for below function" >
+              add event listener will applicable on null if not a admin -->
+                <input type="hidden" class="username" >
                 <% if(isAdmin===true){ %>
                 <form action="/adduser" method="POST" id="myForm" class="d-flex">
                     <input class="dd" type="hidden" name="localstorage">
@@ -77,7 +77,7 @@
       </table>
       
       
-      <form class=""  action="/addtransaction" method="POST">
+      <form class="text-center"  action="/addtransaction" method="POST">
         <input id="dd" class="dd" type="hidden"  name="localstorage">
         <!-- <input type="text" class="form-control" placeholder="First name"> -->
 
@@ -87,16 +87,22 @@
       </form>
   
       <table class="mt-5 table table-striped">
-        <thead>
-          <tr>
-            <th scope="col" style="color: rgb(81, 54, 107);" >Date</th>
-            <th scope="col" style="color: rgb(81, 54, 107);" >Name</th>
-            <th scope="col" style="color: rgb(81, 54, 107);">GoodsName</th>
-            <th scope="col" style="color: rgb(81, 54, 107);">Amount</th>
-            <th scope="col" style="color: rgb(81, 54, 107);">Modify</th>
-          </tr>
-        </thead>
-        <tbody>
+        <% if(goods.length > 0) { %>
+          <thead>
+            <tr>
+              <th scope="col" style="color: rgb(81, 54, 107);" >Date</th>
+              <th scope="col" style="color: rgb(81, 54, 107);" >Name</th>
+              <th scope="col" style="color: rgb(81, 54, 107);">GoodsName</th>
+              <th scope="col" style="color: rgb(81, 54, 107);">Amount</th>
+              <th scope="col" style="color: rgb(81, 54, 107);">Modify</th>
+            </tr>
+          </thead>
+          <tbody>
+        <% } else { %>
+          <div class="" >
+            <img class=" mx-auto" style="position: absolute; top: 60%; left: 50%; transform: translate(-50%, -50%);"  src="https://ik.imagekit.io/yix6plf6z/project_bill_Splitter/no-lesson-illustration_atnHv9Ue8.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662385207744" alt="jajajaj">
+          </div>
+        <% } %>
 
           <!-- <span class="badge text-info">New</span> ***************************Updeated badges-->
 
@@ -214,11 +220,11 @@
         }
         
 
-        function myfunction(){
-            if(localStorage.getItem("expense")!= null){
-                location.replace(`http://localhost:3000/profile/${localStorage.getItem("expense")}`);
-            }
-        }
+        // function myfunction(){
+        //     if(localStorage.getItem("expense")!= null){
+        //         location.replace(`http://localhost:3000/profile/${localStorage.getItem("expense")}`);
+        //     }
+        // }
 
         function GetFormattedDate() {
   var todayTime = new Date();

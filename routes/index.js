@@ -18,8 +18,9 @@ router.get('/', function (req, res, next) {
 // **********User Register Route *****************//
 router.post('/register', function (req, res) {
   const newuserModel = new User({
-    username: req.body.username,
+    username: req.body.username.toString().toLowerCase(),
     name: req.body.name,
+    email: req.body.email,
     password: req.body.password,
   })
   User.register(newuserModel, req.body.password)
@@ -42,7 +43,7 @@ router.post('/adduser', isLoggedIn, function (req, res) {
   Expense.findOne({ _id: req.body.localstorage })
     .then((found) => {
       if (found.adminusername === req.session.passport.user) {
-        User.findOne({ username: req.body.username })
+        User.findOne({ username: req.body.username.toString().toLowerCase() })
           .then((userfound) => {
             console.log("69696969696969696"+userfound);
             userfound.expensename.push(found)
@@ -55,20 +56,11 @@ router.post('/adduser', isLoggedIn, function (req, res) {
           })
       } else {
         console.log("Not Allow")
-        res.json("You Can not add user Only admin does!!!")
+        res.json("Only Admin can add user")
       }
     })
 })
 
-
-
-// ************Work need to be done************
-// router.get('/checkuser/:username/:localstorage', function (req, res) {
-//   console.log(`"user ${req.params.username} local ${req.params.localstorage}`)
-//   Expense.findOne({ _id: req.params.localstorage }).populate('otheruser').exec((err, posts) => {
-//     console.log("Populated User " + posts);
-//   })
-// })
 
 
 // *************Create Expense*************//
@@ -83,7 +75,6 @@ router.post('/createexpense', isLoggedIn, (req, res) => {
       }).then((created) => {
         found.expensename.push(created)
         found.save().then(function () {
-          // res.send(created);
         })
       }).catch((err) => {
         res.send(err)
@@ -181,7 +172,6 @@ router.post('/addtransaction', isLoggedIn, function (req, res) {
 
 
 router.get('/deletecluster/:clusterId/:index', isLoggedIn, function(req,res){
-  // console.log("restOfExpense",req.params.clusterId)
   User.findOne({username: req.session.passport.user}).then(userfound=>{
     const restOfExpense= deleteExpense(userfound.expensename, req.params.index)
     console.log("rest",restOfExpense)
@@ -200,7 +190,6 @@ const deleteExpense=(expenseArr, indexNo)=>{
   console.log(expenseArr)
   let a= expenseArr.splice(indexNo,1)
   return expenseArr;
-  // console.log('================',a, expenseArr)
 
 }
 
@@ -209,7 +198,7 @@ const deleteExpense=(expenseArr, indexNo)=>{
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/profile',
   failureRedirect: '/'
-}), function (req, res, next) { });
+}));
 
 
 

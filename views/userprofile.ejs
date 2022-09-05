@@ -16,9 +16,6 @@
     <% expensename.forEach(function(val){ %>
         <a href="/userprofile/<%=val %>" class="radio" name="expense" title="kkkk"
         value="<%= val %>"><%= val %></a>
-        <!-- <a href="/profile/Jaunpur"><input id="<%= val.expensename %>" class="radio" type="radio" name="expense" title="kkkk"
-            value="<%= val.expensename %>" onclick="selectexpense(value)">
-        <label for="<%= val.expensename %>"><%= val.expensename %></label></a> -->
         <% }) %>
 
     <form action="addtransaction" method="POST">
